@@ -5,24 +5,19 @@ let tieScore = 0;
 document.getElementById("win").hidden = true;
 document.getElementById("lose").hidden = true;
 
-function getRandomInt(min, max) {
+const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function computerPlay(){
+const computerPlay = () => {
   return options[getRandomInt(0, 3)];
 }
 
-buttons = document.getElementsByTagName("button")
-for (var i = 0; i < buttons.length; i++){
-  if (window.addEventListener){
-    buttons[i].addEventListener("click", userPlay, false);
-  }
-}
-function userPlay(){
-  let winner = playRound(this.name, computerPlay());
+const userPlay = (event) => {
+  let playMove = event.target.name;
+  let winner = playRound(playMove, computerPlay());
   console.log(winner);
   console.log(score(winner));
   document.getElementById("win").hidden = true;
@@ -33,7 +28,14 @@ function userPlay(){
   document.getElementById("tie").innerHTML = tieScore;
 }
 
-function score(winner){
+buttons = document.getElementsByTagName("button")
+for (var i = 0; i < buttons.length; i++){
+  if (window.addEventListener){
+    buttons[i].addEventListener("click", userPlay, false);
+  }
+}
+
+const score = (winner) => {
   if (winner == "tie") { 
     return ++tieScore
   }
@@ -45,7 +47,7 @@ function score(winner){
   }
 }  
 
-function gameEnd(){
+const gameEnd = () => {
   if (userScore == 5){
     pcScore = 0;
     userScore = 0;
@@ -60,7 +62,8 @@ function gameEnd(){
   }
 }
 
-function playRound(playerSelection, computerSelection){
+const playRound = (playerSelection, computerSelection) => {
+  console.log(playerSelection)
   if (playerSelection == computerSelection){
     return "tie";
   }
@@ -73,4 +76,3 @@ function playRound(playerSelection, computerSelection){
     return "lose";
   }  
 }
-
